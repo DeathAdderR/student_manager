@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Manager</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+</head>
+<body>
+    <div id="input-container">
+
+        <form id="update-age">
+
+            <h3>Update Student Age</h3>
+
+            <label for="student-id">Student ID:</label>
+            <input type="text" id="student-id" name="student_id" required>
+
+            <label for="new-age">New Age:</label>
+            <input type="number" id="new-age", name="new_age" required>
+
+            <button type="submit">Submit Age</button>
+
+        </form>
+
+        <form id="update-grade">
+
+            <h3>Update Student Grade</h3>
+
+            <label for="student-id-grade">Student ID</label>
+            <input type="text" id="student-id-grade" name="student_id" required>
+
+            <label for="new-grade">New Grade:</label>
+            <input type="text" id="new-grade" name="new_grade" required>
+
+            <button type="submit">Submit Grade</button>
+
+        </form>
+
+        <form id="add-student">
+            <h3>Add new Student</h3>
+            <label for="student-name">Name:</label>
+            <input type="text" id="student-name" name="student_name" required>
+
+            <label for="student-age">Student Age:</label>
+            <input type="number" id="student-age" name="student_age" required>
+            
+            <label for="student-grade">Student Grade:</label>
+            <input type="text" id="student-grade" name="student_grade" required>
+
+            <button type="submit">Add Student</button>
+        </form>
+    </div>
+
+    <script src="{{url_for('static', filename='js/script.js')}}"></script>
+</body>
+</html>
