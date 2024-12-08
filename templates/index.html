@@ -46,12 +46,13 @@
             <input type="number" id="student-age" name="student_age" required>
             
             <label for="student-grade">Student Grade:</label>
-            <input type="text" id="student-grade" name="student_grade" required>
+            <input type="number" id="student-grade" name="student_grade" required>
 
             <button type="submit">Add Student</button>
         </form>
     </div>
+    <div id="student-container"></div>
 
-    <script src="{{url_for('static', filename='js/script.js')}}"></script>
+    <script src="{{url_for('static', filename='js/app.js')}}"></script>
 </body>
 </html>

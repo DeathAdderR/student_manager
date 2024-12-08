@@ -22,6 +22,7 @@ class StudentTable:
     
     def close_connection(self):
         self.connection.close()
+        print("connection to student_manager terminated successfully")
     
     def execute_query(self, query, data=None):
         

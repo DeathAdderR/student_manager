@@ -7,7 +7,7 @@ db = StudentTable()
 
 
 
-app.route('/') # main route to serve the HTML file
+@app.route('/') # main route to serve the HTML file
 
 def index():
     return render_template('index.html')
@@ -23,7 +23,7 @@ def add_student():
     student_age = data.get('student_age')
     student_grade = data.get('student_grade')
 
-    db.execute_query('''INSTERT INTO student_manager (student_name, student_age, student_grade)''', (student_name, student_age, student_grade,))
+    db.execute_query('''INSERT INTO student_manager (student_name, student_age, student_grade) VALUES (?,?,?)''', (student_name, student_age, student_grade,))
 
     return jsonify({"message": "Student added"})
 
@@ -39,7 +39,7 @@ def update_student_grade():
 
     if student_id is None:
         return jsonify({"message": "No student_id provided"})
-    db.execute_query('''UPDATE student_manager SET student_grade = ? WHERE student_id = ?''', (student_grade, student_id))
+    db.execute_query('''UPDATE student_manager SET student_grade = ? WHERE student_id = ?''', (student_grade, student_id,))
 
     return jsonify({"message": f"Student: {student_id} grade changed to {student_grade}"}), 200
 
@@ -48,13 +48,15 @@ def update_student_grade():
 @app.route('/update_student_age', methods=['POST'])
 
 def update_student_age():
-    data = request.json()
+    data = request.get_json()
     student_id = data.get('student_id')
     student_age = data.get('student_age')
 
     if student_id is None:
         return jsonify({"message": "No student_id provided"})
-    db.execute_query('''UPDATE student_manager SET student_age = ? WHERE student_id = ?''', (student_age, student_id))
+    db.execute_query('''UPDATE student_manager SET student_age = ? WHERE student_id = ?''', (student_age, student_id,))
+
+    return jsonify({"message": f"Student: {student_id} age changed to {student_age}"}), 200
 
 
 
@@ -64,6 +66,7 @@ def view_all_students():
     students = db.execute_query('''SELECT * FROM student_manager''')
 
     if students:
+        print(students)
         return jsonify(students), 200
     else:
         return jsonify([]), 200

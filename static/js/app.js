@@ -6,6 +6,9 @@ async function addStudent(event) {
     const studentAge = event.target.student_age.value;
     const studentGrade = event.target.student_grade.value;
 
+    console.log("EXPECTING A LOG BELOW")
+    console.log({studentName, studentAge, studentGrade})
+
     if (!studentName || !studentAge || !studentGrade) {
         alert("Please fill in all fields to add a student.")
         return
@@ -15,9 +18,9 @@ async function addStudent(event) {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            name: studentName,
-            age: studentAge,
-            grade: studentGrade
+            student_name: studentName,
+            student_age: studentAge,
+            student_grade: studentGrade
         })
     });
 
@@ -60,7 +63,7 @@ async function updateStudentAge(event) {
         return
     }
 
-    const response = fetch('/update_student_age', {
+    const response = await fetch('/update_student_age', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -75,12 +78,37 @@ async function updateStudentAge(event) {
 }
 
 async function viewAllStudents() {
-    const response = await fetch('/view_students', {
-        method: 'GET',
-        headers: {'Content-Type': 'application/json'}
-    });
 
-    const students = await response.json()
+    try {
+        const response = await fetch('/view_all_students')
+        const students = await response.json()
+
+        const studentList = document.getElementById('student-container')
+        studentList.innerHTML = ""
+
+        if (studentList.length === 0) {
+            alert("student list is empty")
+            console.log("student list is empty")
+            return
+        }
+        console.log(students)
+
+        students.forEach(student => {
+            const studentDiv = document.createElement('div')
+            studentDiv.setAttribute('height', '200px')
+            studentDiv.setAttribute('width', '200px')
+            studentDiv.setAttribute('border', '1px solid black')
+            studentDiv.textContent += "\nStudent ID: " + student[0]
+            studentDiv.textContent += "\nStudent Name: " + student[1]
+            studentDiv.textContent += "\nStudent Age: " + student[2]
+            studentDiv.textContent += "\nStudent Grade: " + student[3]
+
+            studentList.appendChild(studentDiv)
+        })
+    }
+    catch (error) {
+        console.error("Error fetching students: ", error)
+    }
 }
 
 async function viewStudent(event) {
